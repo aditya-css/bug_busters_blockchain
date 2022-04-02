@@ -9,7 +9,7 @@ describe("MetaStack", function () {
   let aliceAddr, bobAddr;
 
   // Contract
-  let metaStack;
+  let metaStack, metaToken;
 
   before(async () => {
     // Get signers
@@ -21,7 +21,9 @@ describe("MetaStack", function () {
 
     // Deploy contract
     const MetaStack = await ethers.getContractFactory("MetaStack");
+    const MetaToken = await ethers.getContractFactory("MetaToken");
     metaStack = await MetaStack.deploy();
+    metaToken = await MetaToken.deploy();
   });
 
   it("Should revert if Amount is 0", async () => {
@@ -34,4 +36,12 @@ describe("MetaStack", function () {
     await metaStack.sendEth(bobAddr, { value: ethers.utils.parseEther("10") });
     expect(await bob.getBalance()).to.equal(ethers.utils.parseEther("10010"));
   });
+
+  it("Should transfer tokens from one account to another", async () => {
+    await metaToken.swapToToken(metaStack.address, {value: ethers.utils.parseEther("0.00000000000025")});
+    // console.log(await metaToken.balanceOf(aliceAddr));
+    await metaStack.sendToken(bobAddr, metaToken.address, 100);
+    // console.log(await metaToken.balanceOf(bobAddr));
+    
+  })
 });
