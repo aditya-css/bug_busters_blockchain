@@ -11,11 +11,13 @@ contract MetaStack {
         listingFee = 0.1 ether;
     }
     
+    /**
+     @dev Function to Send Ethers to the recepient
+     */
     function sendEth(address _to) external payable {
         require(msg.value > 0, "Amount must be greater than 0");
         require(msg.sender != _to, "Cannot send to yourself");
         require(msg.sender != address(0), "Cannot send to the null address");
-        console.log(address(this).balance);
         payable(_to).transfer(msg.value);
     }
 }
