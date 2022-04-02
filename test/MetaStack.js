@@ -8,7 +8,7 @@ describe("MetaStack", function () {
   // Signer addresses
   let aliceAddr, bobAddr;
 
-  // Contract 
+  // Contract
   let metaStack;
 
   before(async () => {
@@ -22,7 +22,13 @@ describe("MetaStack", function () {
     // Deploy contract
     const MetaStack = await ethers.getContractFactory("MetaStack");
     metaStack = await MetaStack.deploy();
-  })
+  });
+
+  it("Should revert if Amount is 0", async () => {
+    await expect(
+      metaStack.sendEth(bobAddr, { value: ethers.utils.parseEther("0") })
+    ).to.be.revertedWith("Amount must be greater than 0");
+  });
 
   it("Should transfer ethers from one account to another", async function () {
     await metaStack.sendEth(bobAddr, { value: ethers.utils.parseEther("10") });
