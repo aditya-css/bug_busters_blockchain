@@ -10,8 +10,6 @@ contract MetaStack {
     constructor() {
         listingFee = 0.1 ether;
     }
-
-    function listQuestion() external {}
     
     function sendEth(address _to) external payable {
         require(msg.value > 0, "Amount must be greater than 0");
