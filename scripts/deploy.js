@@ -22,7 +22,7 @@ async function main() {
   const MetaToken = await hre.ethers.getContractFactory("MetaToken");
   const metatoken = await MetaToken.deploy();
   await metatoken.deployed();
-  console.log("MetaStack deployed to:", metatoken.address);
+  console.log("MetaToken deployed to:", metatoken.address);
 }
 
 main()
