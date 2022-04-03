@@ -38,10 +38,19 @@ describe("MetaStack", function () {
   });
 
   it("Should transfer tokens from one account to another", async () => {
-    await metaToken.swapToToken(metaStack.address, {value: ethers.utils.parseEther("0.00000000000025")});
-    // console.log(await metaToken.balanceOf(aliceAddr));
+    await metaToken.ethToToken({
+      value: ethers.utils.parseEther("0.00000000000025"),
+    });
+    await metaToken.approve(metaStack.address, 100);
     await metaStack.sendToken(bobAddr, metaToken.address, 100);
-    // console.log(await metaToken.balanceOf(bobAddr));
-    
-  })
+  });
+
+  it("Should update the allowance", async () => {
+    await metaToken.approve(metaStack.address, 249895);
+    await metaStack.sendToken(bobAddr, metaToken.address, 249895);
+    await metaToken.ethToToken({
+      value: ethers.utils.parseEther("0.00000000000025"),
+    });
+    await metaToken.approve(metaStack.address, 249895);
+  });
 });

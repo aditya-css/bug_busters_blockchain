@@ -14,16 +14,17 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const MetaStack = await hre.ethers.getContractFactory("MetaStack");
+  const metastack = await MetaStack.deploy();
+  await metastack.deployed();
+  console.log("MetaStack deployed to:", metastack.address);
 
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
+  const MetaToken = await hre.ethers.getContractFactory("MetaToken");
+  const metatoken = await MetaToken.deploy();
+  await metatoken.deployed();
+  console.log("MetaStack deployed to:", metatoken.address);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main()
   .then(() => process.exit(0))
   .catch((error) => {
