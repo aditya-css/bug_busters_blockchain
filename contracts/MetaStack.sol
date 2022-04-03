@@ -7,11 +7,11 @@ import "./MetaToken.sol";
 
 contract MetaStack {
     uint256 public listingFee;
-    
+
     constructor() {
         listingFee = 0.1 ether;
     }
-    
+
     /**
      @dev Event Emitted when Ethers are sent as reward
      */
@@ -35,10 +35,18 @@ contract MetaStack {
     /**
      @dev Function to Send Tokens to the recepient
      */
-    function sendToken(address _to, address _contractAddress, uint256 _amount) external {
+    function sendToken(
+        address _to,
+        address _contractAddress,
+        uint256 _amount
+    ) external {
         require(_amount > 0, "Amount must be greater than 0");
         require(msg.sender != _to, "Cannot send to yourself");
         require(msg.sender != address(0), "Cannot send to the null address");
-        IERC20(_contractAddress).transferFrom(address(msg.sender), _to, _amount);
+        IERC20(_contractAddress).transferFrom(
+            address(msg.sender),
+            _to,
+            _amount
+        );
     }
 }
